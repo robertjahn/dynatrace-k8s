@@ -26,6 +26,3 @@ echo -e "${YLW}Waiting about 5 minutes for all pods to become ready...${NC}"
 sleep 330s
 kubectl get po --all-namespaces -l product=sockshop
 
-echo -e "${YLW}Starting carts load test${NC}"
-#start dev carts load 
-nohup ./carts-load.sh &
