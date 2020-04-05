@@ -5,11 +5,11 @@ NC='\033[0m'
 
 echo -e "${YLW}Please enter your Dynatrace credentials as requested below: ${NC}"
 ENVIRONMENT_ID=""
-read -p "Environment ID (ex. https://<ENVIRONMENT_ID>.sprint.dynatracelabs.com): " ENVIRONMENT_ID
-API_TOKEN=""
-read -p "API token: " API_TOKEN
+read -p "Environment ID (ex. https://<ENVIRONMENT_ID>.live.dynatrace.com): " ENVIRONMENT_ID
 PAAS_TOKEN=""
 read -p "PaaS token: " PAAS_TOKEN
+API_TOKEN=""
+read -p "API token: " API_TOKEN
 CONFIG_TOKEN=""
 read -p "Config token: " CONFIG_TOKEN
 echo ""
@@ -35,5 +35,3 @@ then
 fi
 
 echo ""
-
-
