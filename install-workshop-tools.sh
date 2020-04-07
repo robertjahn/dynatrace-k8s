@@ -17,8 +17,9 @@ if ! [ -x "$(command -v kubectl)" ]; then
   curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/kubectl
   echo "Installing 'kubectl' ..."
   chmod +x ./kubectl
-  mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-  #rm kubectl
+  mkdir -p $HOME/bin
+  cp ./kubectl $HOME/bin/kubectl
+  rm kubectl
 fi
 
 # aws-iam-authenicator`
@@ -30,14 +31,21 @@ if ! [ -x "$(command -v aws-iam-authenicator)" ]; then
   curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator
   echo "Installing 'aws-iam-authenticator' ..."
   chmod +x ./aws-iam-authenticator
-  mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+  mkdir -p $HOME/bin
+  cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator
   rm aws-iam-authenticator
 fi
 
 # Upgrade AWS cli
-sudo rm /usr/bin/aws
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
-export PATH="/usr/local/bin:$PATH"
+if [ `aws --version | grep "aws-cli/2" | wc -l` == "0" ]; then
+  echo "Updating 'AWS cli' to version 2 ..."
+  sudo rm /usr/bin/aws
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install
+fi
+
+# update path
+echo 'export PATH="$HOME/bin:/usr/local/bin:$PATH"' >> ~/.bashrc
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
+
