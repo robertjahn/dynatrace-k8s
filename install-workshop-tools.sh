@@ -45,6 +45,13 @@ if [ `aws --version | grep "aws-cli/2" | wc -l` == "0" ]; then
   sudo ./aws/install
 fi
 
+if ! [ -x "$(command -v helm)" ]; then
+  rm get_helm.sh
+  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+  chmod 700 get_helm.sh
+  ./get_helm.sh
+fi
+
 # update path
 echo 'export PATH="$HOME/bin:/usr/local/bin:$PATH"' >> ~/.bashrc
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
